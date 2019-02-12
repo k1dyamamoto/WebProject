@@ -1,0 +1,25 @@
+postgresql:
+  image: postgres:9.3
+  env_file: .env
+  volumes:
+    - ./dockerfiles/pgdata:/var/lib/postgresql/data/pgdata
+  ports:
+    - "5432"
+
+project:
+  build: ./
+  env_file: .env
+  working_dir: /opt/project
+  command: bash -c "sleep 3 && /etc/init.d/ssh start && supervisord -n"
+  volumes:
+    - ./src:/opt/project
+    - ./dockerfiles/sshdconf/sshd_config:/etc/ssh/sshd_config
+    - ./dockerfiles/id_rsa.pub:/root/.ssh/authorized_keys
+    - /Users/ilasgasanov/.pycharm_helpers/:/root/.pycharm_helpers/
+    - ./supervisord.conf:/etc/supervisord.conf
+    - ./djangod.conf:/etc/djangod.conf
+  links:
+    - postgresql
+  ports:
+    - "2225:22"
+    - "8005:8000"
