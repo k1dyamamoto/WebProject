@@ -6,3 +6,4 @@ pyparsing
 pytz
 six
 psycopg2
+django-crispy-forms
