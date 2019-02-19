@@ -7,3 +7,10 @@ pytz
 six
 psycopg2
 django-crispy-forms
+pillow
+static
+urllib3
+requests
+idna
+chardet
+certifi
